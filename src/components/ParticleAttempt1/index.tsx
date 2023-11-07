@@ -55,17 +55,53 @@ interface Props {}
 export const ParticleThing: Component<Props> = (props) => {
     onMount(() => {
         init();
-        const cubeGeo = new THREE.BoxGeometry(2, 2, 2);
-        const cubeMat = new THREE.ShaderMaterial({
+        // woah its pi but decimal is moved to the right and 3 is removed
+        // very interesitng
+        const curvyFactor = 1.4159265;
+        const curve = new THREE.CatmullRomCurve3(
+            [
+                new THREE.Vector3(-1, -1, 0),
+                new THREE.Vector3(0.0, -curvyFactor, 0),
+                new THREE.Vector3(1, -1, 0), // cool
+                new THREE.Vector3(curvyFactor, -0, 0),
+                new THREE.Vector3(1, 1, 0),
+                new THREE.Vector3(0.0, curvyFactor, 0),
+                new THREE.Vector3(-1, 1, 0),
+                new THREE.Vector3(-curvyFactor, 0.0, 0),
+            ],
+            true,
+            'centripetal'
+        );
+
+        const points = curve.getPoints(1000);
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const lineMaterial = new THREE.ShaderMaterial({
             vertexShader,
             fragmentShader,
         });
+        const curveObject = new THREE.Line(geometry, lineMaterial);
+        scene.add(curveObject);
 
-        const cubeObj = new THREE.Mesh(cubeGeo, cubeMat);
+        // thank you for your service circle :salute:
+        const circleGeometry = new THREE.CircleGeometry(0.05, 32);
+        const circleMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        const circle = new THREE.Mesh(circleGeometry, circleMaterial);
 
-        scene.add(cubeObj);
+        circle.position.copy(points[0]);
+
+        scene.add(circle);
 
         function animate(idk?: number) {
+            const elapsedTime = clock.getElapsedTime();
+            const t = ((elapsedTime * 0.3) % 2) / 2;
+
+            const positionOnCurve = curve.getPointAt(t);
+            circle.position.copy(positionOnCurve);
+
+            const tangent = curve.getTangentAt(t).normalize();
+            const angle = Math.atan2(tangent.y, tangent.x);
+            circle.rotation.z = angle;
+
             renderer.render(scene, camera);
             animateId = requestAnimationFrame(animate);
         }

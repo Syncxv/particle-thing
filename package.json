@@ -11,7 +11,6 @@
     "license": "MIT",
     "devDependencies": {
         "@types/three": "^0.158.1",
-        "@types/three-nebula": "^10.0.2",
         "autoprefixer": "^10.4.14",
         "postcss": "^8.4.24",
         "solid-devtools": "^0.27.3",
@@ -21,10 +20,8 @@
         "vite-plugin-solid": "^2.7.0"
     },
     "dependencies": {
-        "@babel/runtime": "^7.23.2",
         "solid-js": "^1.7.6",
         "three": "^0.158.0",
-        "three-nebula": "^10.0.3",
         "vite-plugin-glsl": "^1.1.2"
     }
 }

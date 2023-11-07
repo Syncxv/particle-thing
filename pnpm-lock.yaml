@@ -5,18 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@babel/runtime':
-    specifier: ^7.23.2
-    version: 7.23.2
   solid-js:
     specifier: ^1.7.6
     version: 1.7.6
   three:
     specifier: ^0.158.0
     version: 0.158.0
-  three-nebula:
-    specifier: ^10.0.3
-    version: 10.0.3(three@0.158.0)
   vite-plugin-glsl:
     specifier: ^1.1.2
     version: 1.1.2(vite@4.3.9)
@@ -25,9 +19,6 @@ devDependencies:
   '@types/three':
     specifier: ^0.158.1
     version: 0.158.1
-  '@types/three-nebula':
-    specifier: ^10.0.2
-    version: 10.0.2
   autoprefixer:
     specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.24)
@@ -362,13 +353,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /@babel/runtime@7.23.2:
-    resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.14.0
-    dev: false
 
   /@babel/template@7.22.5:
     resolution: {integrity: sha512-X7yV7eiwAxdj9k94NEylvbVHLiVG1nvzCV2EAowhxLTwODV1jl9UzZ48leOC0sH7OnuHrIkllaBgneUykIcZaw==}
@@ -869,12 +853,6 @@ packages:
     resolution: {integrity: sha512-j1oI+BOPiAAAKFysNNutE9aAIjvHqqILubCs2EeHKc19pi4uybaGAgBfLXsCgJYcyKWkiilEvl8CkFF/SL+baA==}
     dev: true
 
-  /@types/three-nebula@10.0.2:
-    resolution: {integrity: sha512-+2PdWT0d1V5KDnGvC5Y4rn7L2bA7SL0SNffqgAPlHOqdZvfwjvLA7xQgAaXdXWUkCnUgNy7dRN0IMpFrJZz9sw==}
-    dependencies:
-      '@types/three': 0.158.1
-    dev: true
-
   /@types/three@0.158.1:
     resolution: {integrity: sha512-U7SimpoMrlpY2TjYedb9sQeOVHdRWJEiaNQxywJETMGMoEhWEfpP0sywRADR/xOQbaixZ6lk5Hv+3IOFriprkw==}
     dependencies:
@@ -1289,10 +1267,6 @@ packages:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: true
 
-  /lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: false
-
   /lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
     dependencies:
@@ -1471,10 +1445,6 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  /potpack@1.0.2:
-    resolution: {integrity: sha512-choctRBIV9EMT9WGAZHn3V7t0Z2pMQyl0EZE6pFc/6ml3ssw7Dlf/oAOvFwjm1HVsqfQN8GfeFyJ+d8tRzqueQ==}
-    dev: false
-
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
@@ -1491,10 +1461,6 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
-
-  /regenerator-runtime@0.14.0:
-    resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
-    dev: false
 
   /resolve@1.22.2:
     resolution: {integrity: sha512-Sb+mjNHOULsBv818T40qSPeRiuWLyaGMa5ewydRLFimneixmVy2zdivRl+AF6jaYPC8ERxGDmFSiqui6SfPd+g==}
@@ -1647,17 +1613,6 @@ packages:
       any-promise: 1.3.0
     dev: true
 
-  /three-nebula@10.0.3(three@0.158.0):
-    resolution: {integrity: sha512-cX0UVkCGKx1r36z/yo26HAjsMGa3NcSvGZlODTLo6lfNikpK7oYXgq5r4yVrjaGjhpeKnFalNTI8LsHiZ8KlYw==}
-    peerDependencies:
-      three: '>=0.122.0 <1.0.0'
-    dependencies:
-      lodash: 4.17.21
-      potpack: 1.0.2
-      three: 0.158.0
-      uuid: 3.4.0
-    dev: false
-
   /three@0.158.0:
     resolution: {integrity: sha512-TALj4EOpdDPF1henk2Q+s17K61uEAAWQ7TJB68nr7FKxqwyDr3msOt5IWdbGm4TaWKjrtWS8DJJWe9JnvsWOhQ==}
     dev: false
@@ -1703,12 +1658,6 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
-
-  /uuid@3.4.0:
-    resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-    hasBin: true
-    dev: false
 
   /validate-html-nesting@1.2.2:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
