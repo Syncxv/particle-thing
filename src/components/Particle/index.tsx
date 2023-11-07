@@ -19,6 +19,8 @@ import System, {
     Color,
     RadialVelocity,
     Body,
+    Force,
+    Rotate,
 } from 'three-nebula';
 
 let container: HTMLDivElement;
@@ -70,7 +72,6 @@ function destroy() {
 }
 
 interface Props {}
-let tha = 0;
 export const ParticleThing: Component<Props> = (props) => {
     onMount(() => {
         init();
@@ -114,16 +115,17 @@ export const ParticleThing: Component<Props> = (props) => {
             .setRate(new Rate(20, 0.01))
             .setInitializers([
                 new Position(new PointZone(0, 0)),
-                new Mass(1),
+                new Mass(4, 10),
                 new Radius(12, 24),
-                new RadialVelocity(1, new Vector3D(0, 0.1, 0), 180),
-                new Life(3), // hi
+                new RadialVelocity(2, new Vector3D(0, 0.1, 0), 180),
+                new Life(6, 10), // hi
                 new Body(circle),
             ])
             .setBehaviours([
                 new Alpha(1, 0), // bruuuh
-                new Scale(0.1, 0.1),
+                new Scale(0.2, 0.1),
                 new Color(new THREE.Color(0xf00fff), new THREE.Color(0xffffff)),
+                new Force(0, 2, 0),
             ])
             .setPosition({ x: 0, y: 0 })
 
@@ -146,6 +148,14 @@ export const ParticleThing: Component<Props> = (props) => {
             const positionOnCurve = curve.getPointAt(t);
             // circle.position.copy(positionOnCurve);
             emitter.position.copy(positionOnCurve as any);
+            // Calculate the tangent to the curve at the current position
+            const tangent = curve.getTangentAt(t).normalize();
+
+            // Calculate the angle from the tangent vector
+            const angle = Math.atan2(tangent.y, tangent.x);
+
+            // Apply the rotation to the circle
+            emitter.setRotation({ y: angle });
 
             system.update();
             renderer.render(scene, camera);
