@@ -2,26 +2,6 @@ import { Component, onCleanup, onMount } from 'solid-js';
 import * as THREE from 'three';
 import vertexShader from './shaders/vertex.vert';
 import fragmentShader from './shaders/fragment.frag';
-import System, {
-    SpriteRenderer,
-    Emitter,
-    Rate,
-    Span,
-    Position,
-    Mass,
-    Radius,
-    Life,
-    Velocity,
-    PointZone,
-    Vector3D,
-    Alpha,
-    Scale,
-    Color,
-    RadialVelocity,
-    Body,
-    Force,
-    Rotate,
-} from 'three-nebula';
 
 let container: HTMLDivElement;
 
@@ -75,13 +55,19 @@ interface Props {}
 export const ParticleThing: Component<Props> = (props) => {
     onMount(() => {
         init();
-
+        // woah its pi but decimal is moved to the right and 3 is removed
+        // very interesitng
+        const curvyFactor = 1.4159265;
         const curve = new THREE.CatmullRomCurve3(
             [
                 new THREE.Vector3(-1, -1, 0),
+                new THREE.Vector3(0.0, -curvyFactor, 0),
                 new THREE.Vector3(1, -1, 0), // cool
+                new THREE.Vector3(curvyFactor, -0, 0),
                 new THREE.Vector3(1, 1, 0),
+                new THREE.Vector3(0.0, curvyFactor, 0),
                 new THREE.Vector3(-1, 1, 0),
+                new THREE.Vector3(-curvyFactor, 0.0, 0),
             ],
             true,
             'centripetal'
@@ -101,63 +87,21 @@ export const ParticleThing: Component<Props> = (props) => {
         const circleMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         const circle = new THREE.Mesh(circleGeometry, circleMaterial);
 
-        // circle.position.copy(points[0]);
+        circle.position.copy(points[0]);
 
-        // scene.add(circle);
-
-        const system = new System();
-        const emitter = new Emitter();
-        const spriteRenderer = new SpriteRenderer(scene, THREE);
-
-        // Set emitter rate (particles per second) as well as the particle initializers and behaviours
-        emitter
-            // .setRate(new Rate(new Span(4, 16), new Span(0.01)))
-            .setRate(new Rate(20, 0.01))
-            .setInitializers([
-                new Position(new PointZone(0, 0)),
-                new Mass(4, 10),
-                new Radius(12, 24),
-                new RadialVelocity(2, new Vector3D(0, 0.1, 0), 180),
-                new Life(6, 10), // hi
-                new Body(circle),
-            ])
-            .setBehaviours([
-                new Alpha(1, 0), // bruuuh
-                new Scale(0.2, 0.1),
-                new Color(new THREE.Color(0xf00fff), new THREE.Color(0xffffff)),
-                new Force(0, 2, 0),
-            ])
-            .setPosition({ x: 0, y: 0 })
-
-            .emit();
-
-        // add the emitter and a renderer to your particle system
-        system
-            .addEmitter(emitter)
-            .addRenderer(spriteRenderer)
-            .emit({
-                onStart: () => {},
-                onUpdate: () => {},
-                onEnd: () => {},
-            });
+        scene.add(circle);
 
         function animate(idk?: number) {
             const elapsedTime = clock.getElapsedTime();
             const t = ((elapsedTime * 0.3) % 2) / 2;
 
             const positionOnCurve = curve.getPointAt(t);
-            // circle.position.copy(positionOnCurve);
-            emitter.position.copy(positionOnCurve as any);
-            // Calculate the tangent to the curve at the current position
+            circle.position.copy(positionOnCurve);
+
             const tangent = curve.getTangentAt(t).normalize();
-
-            // Calculate the angle from the tangent vector
             const angle = Math.atan2(tangent.y, tangent.x);
+            circle.rotation.z = angle;
 
-            // Apply the rotation to the circle
-            emitter.setRotation({ y: angle });
-
-            system.update();
             renderer.render(scene, camera);
             animateId = requestAnimationFrame(animate);
         }
